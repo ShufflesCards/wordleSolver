@@ -184,7 +184,13 @@ bool satisfiesGray(const WordInfo& w) {
 
 void solve(){
    
-
+    cout << "what green charachters do you have? Format with _ for non green. ex if you have a green 'e' and 'a' you would type _ea__ if the word was beans \n";
+    string greenIn; cin >> greenIn;
+    for(int i = 0; i < 5; i++){
+        if(isalpha(greenIn[i])){
+            green.push_back({greenIn[i], i});
+        }
+    }
     
     cout << "what yellow charachters do you have? Format with _ for non yellow. \n";
     string yellowIn; cin >> yellowIn;
@@ -215,6 +221,7 @@ void solve(){
         cout << w.word << " ";
         candidates.push_back(&w);
     }
+    cout << endl;
 
 
 
@@ -516,26 +523,20 @@ int main(){
     
     string txt;
 
-    if(true){
+
         
-        while(getline(WordleFile, txt)){
+    while(getline(WordleFile, txt)){
 
-            preprocess(txt);
+        preprocess(txt);
 
-            
+        
 
-        }
     }
+    
     WordleFile.close();
     
     
-    cout << "what green charachters do you have? Format with _ for non green. ex if you have a green 'e' and 'a' you would type _ea__ if the word was beans \n";
-    string greenIn; cin >> greenIn;
-    for(int i = 0; i < 5; i++){
-        if(isalpha(greenIn[i])){
-            green.push_back({greenIn[i], i});
-        }
-    }
+    
     for(int i = 0; i < 5; i++){
         solve();
         cout << endl;
