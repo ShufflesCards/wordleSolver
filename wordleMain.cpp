@@ -143,9 +143,12 @@ void preprocess(const string& w) {
     words.push_back(info);
 }
 
+vector<pair<char, int>> green;  // (letter, position)
 
 bool satisfiesGreen(const WordInfo& w) {
-
+    for(auto [ch, pos] : green){
+        if(w.word[pos] != ch) return false;
+    }
     return true;
 }
 
@@ -168,8 +171,11 @@ bool satisfiesYellow(const WordInfo& w) {
     return true;
 }
 
+bool gray[26];
 bool satisfiesGray(const WordInfo& w) {
-
+    for(int i = 0; i < 26; i++){
+        if(gray[i] && w.freq[i]>0) return false;
+    }
     return true;
 }
 
@@ -177,43 +183,36 @@ bool satisfiesGray(const WordInfo& w) {
 
 
 void solve(){
-    ifstream WordleFile("wordle-answers-alphabetical.txt");
+   
 
-
-
-    // vvvvvs listTemplate(26, vvvvs(26, vvvs(26, vvs(26, vs(26, "\0")))));
-
-    // vvvvvs allWords = listTemplate;
     
-    
-    string txt;
-    // auto startTxt = high_resolution_clock::now();
-    if(true){
-        
-        while(getline(WordleFile, txt)){
-
-            preprocess(txt);
-
-            //cout << txt << "\n";
-            
-
+    cout << "what yellow charachters do you have? Format with _ for non yellow. \n";
+    string yellowIn; cin >> yellowIn;
+    for(int i = 0; i < 5; i++){
+        if(isalpha(yellowIn[i])){
+            yellow.push_back({yellowIn[i], i});
+            minCount[yellowIn[i]-'a']++;
         }
     }
-    WordleFile.close();
-    
-    
 
 
-
-
-
+    cout << "what gray charachters do you have? Format with _ for non gray. \n";
+    string grayIn; cin >> grayIn;
+    for(int i = 0; i < 5; i++){
+        if(isalpha(grayIn[i])){
+            gray[grayIn[i]-'a'] = true;
+        }
+    }
 
 
     for (const WordInfo& w : words) {
-        if (!satisfiesGreen(w))  continue;
+        if (!satisfiesGreen(w)){
+            // cout << w.word << " ";
+            continue;
+        }
         if (!satisfiesYellow(w)) continue;
         if (!satisfiesGray(w))   continue;
-    
+        cout << w.word << " ";
         candidates.push_back(&w);
     }
 
@@ -506,9 +505,41 @@ void solve(){
 }
 
 int main(){
+    ifstream WordleFile("wordle-answers-alphabetical.txt");
+
+
+
+    // vvvvvs listTemplate(26, vvvvs(26, vvvs(26, vvs(26, vs(26, "\0")))));
+
+    // vvvvvs allWords = listTemplate;
     
     
-    solve();
+    string txt;
+
+    if(true){
+        
+        while(getline(WordleFile, txt)){
+
+            preprocess(txt);
+
+            
+
+        }
+    }
+    WordleFile.close();
+    
+    
+    cout << "what green charachters do you have? Format with _ for non green. ex if you have a green 'e' and 'a' you would type _ea__ if the word was beans \n";
+    string greenIn; cin >> greenIn;
+    for(int i = 0; i < 5; i++){
+        if(isalpha(greenIn[i])){
+            green.push_back({greenIn[i], i});
+        }
+    }
+    for(int i = 0; i < 5; i++){
+        solve();
+        cout << endl;
+    }
 
 
     return 0;
