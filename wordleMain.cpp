@@ -197,7 +197,7 @@ void solve(){
     for(int i = 0; i < 5; i++){
         if(isalpha(yellowIn[i])){
             yellow.push_back({yellowIn[i], i});
-            minCount[yellowIn[i]-'a']++;
+            minCount[yellowIn[i]-'a']++; // this is where the problem is
         }
     }
 
@@ -545,3 +545,4 @@ int main(){
 
     return 0;
 }
+
