@@ -194,13 +194,17 @@ void solve(){
     
     cout << "what yellow charachters do you have? Format with _ for non yellow. \n";
     string yellowIn; cin >> yellowIn;
+
+    int tempMinCount[26] = {0};  
     for(int i = 0; i < 5; i++){
         if(isalpha(yellowIn[i])){
             yellow.push_back({yellowIn[i], i});
-            minCount[yellowIn[i]-'a']++; // this is where the problem is
+            tempMinCount[yellowIn[i]-'a']++;
         }
     }
-
+    for(int i = 0; i <26; ++i){
+        minCount[i] = tempMinCount[i] > minCount[i] ? tempMinCount[i] : minCount[i];
+    }
 
     cout << "what gray charachters do you have? Format with _ for non gray. \n";
     string grayIn; cin >> grayIn;
@@ -545,4 +549,3 @@ int main(){
 
     return 0;
 }
-
